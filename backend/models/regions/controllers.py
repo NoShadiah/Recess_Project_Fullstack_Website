@@ -1,71 +1,69 @@
 from flask import jsonify, request, Blueprint
 from flask_jwt_extended import JWTManager
-from models.settings.model import Restaurant
+from models.regions.model import Region
 from models.db import db
 
 
 # an instance of the blue print
-restaurants = Blueprint('restaurants', __name__, url_prefix='/restaurants')
+regions = Blueprint('regions', __name__, url_prefix='/regions')
 
 
-@restaurants.route("/create", methods=["POST"])
+@regions.route("/create", methods=["POST"])
 def create():
     r_name=request.json["name"] 
-    r_location=request.json["location"]
-    r_contact=request.json["contact"]
-    r_opening_hrs=request.json["opening_hrs"] 
-    r_closing_hrs=request.json["closing_hrs"]
+    r_reg_by=request.json["reg_by"]
+    r_updated_by=request.json["updated_by"]
+    r_country=request.json["country"] 
+    
 
     if not r_name:
         return ({"message":"The name is required"}, 400)
-    if not r_location:
-        return ({"message":"The location is required"}, 400)
-    if not r_contact:
-        return ({"message":"The restaurant contact is required"}, 400)
-    if not r_opening_hrs:
+    if not r_reg_by:
+        return ({"message":"The reg_by is required"}, 400)
+    if not r_updated_by:
+        return ({"message":"The Region updated_by is required"}, 400)
+    if not r_country:
         return ({"message":"The opening time is required"}, 400)
-    if not r_closing_hrs:
-        return ({"message":"The closing time is required"}, 400)
+    
 
     # Working on the conflicts
-    if Restaurant.query.filter_by(contact=r_contact).first():
-        return {"message":"Sorry, contact already in use"}, 400
+    if Region.query.filter_by(updated_by=r_updated_by).first():
+        return {"message":"Sorry, updated_by already in use"}, 400
     
     
-    new_restaurant = Restaurant(name=r_name, location=r_name,contact=r_contact,opening_hrs=r_opening_hrs, closing_hrs=r_closing_hrs)
-    db.session.add(new_restaurant)
+    new_Region = Region(name=r_name, reg_by=r_name,updated_by=r_updated_by,country=r_country)
+    db.session.add(new_Region)
     db.session.commit()
 
-    return f"You successfully added the user {new_restaurant.id}"
+    return f"You successfully added the user {new_Region.id}"
 
-@restaurants.route("/all")
-def all_restaurants():
-    #return "This is from the first restaurant route"
-    restaurants= Restaurant.query.all()
+@regions.route("/all")
+def all_regions():
+    #return "This is from the first Region route"
+    regions= Region.query.all()
     results = [
         {
-            "name":restaurant.name,
-            "location":restaurant.location,
-            "contact":restaurant.contact
-        }for restaurant in restaurants]
+            "name":Region.name,
+            "reg_by":Region.reg_by,
+            "updated_by":Region.updated_by
+        }for Region in regions]
     
-    return {"count":len(results), "restaurants":results} 
+    return {"count":len(results), "regions":results} 
 
-@restaurants.route("/get_restaurant/<id>")
+@regions.route("/get_Region/<id>")
 def get_user(id):
-    restaurant=Restaurant.query.get_or_404(id)
-    restaurant_details={
-        "name":restaurant.name,
-        "location":restaurant.location,
-        "contact":restaurant.contact,
-        "opens at":restaurant.opening_hrs,
-        "closes at":restaurant.closing_hrs
-    }
-    return {f"Restaurant {restaurant.id}":restaurant_details}
+    Region=Region.query.get_or_404(id)
+    Region_details={
+        "name":Region.name,
+        "reg_by":Region.reg_by,
+        "updated_by":Region.updated_by,
+        "opens at":Region.country
+        }
+    return {f"Region {Region.id}":Region_details}
 
-@restaurants.route("/delete_restaurant/<id>")
+@regions.route("/delete_Region/<id>")
 def delete(id):
-    delete_user=Restaurant.query.delete(id)
+    delete_user=Region.query.delete(id)
     # if delete_user is None:
     #     return{"message":"Specified id not found"}, 404
     # else:

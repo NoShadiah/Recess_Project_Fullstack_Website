@@ -2,7 +2,7 @@ from models.db import db
 from datetime import datetime
 
 
-class admin(db.Model):
+class Admin(db.Model):
       __tablename__ = 'admins'
 
       id = db.Column(db.Integer, primary_key = True)
@@ -11,12 +11,16 @@ class admin(db.Model):
       contact = db.Column(db.String(200))
       password = db.Column(db.String(10))
       admin_type = db.Column(db.String(100), default='administrator')
-      registered_by= db.Column(db.String(30), default='self_registered')
+      registered_by= db.Column(db.String(30), default='super_admin')
       registered_at = db.Column(db.DateTime, default=datetime.now())
       # update_by = db.Column(db.String(30))
       updated_at = db.Column(db.DateTime, onupdate=datetime.now())
       settings = db.relationship("Restaurant", backref="admin", remote_side=[id], lazy='dynamic')
-      regions = db.relationship("Region",backref="admin", remote_side=[id], lazy='dynamic')
+      regions = db.relationship("Region", backref="admin", remote_side=[id], lazy='dynamic')
+      districts = db.relationship("District", backref="admin", remote_side=[id], lazy='dynamic')
+      divisions = db.relationship("Division", backref="admin", remote_side=[id], lazy='dynamic')
+      menu = db.relationship("MenuItem", backref='admin', remote_side=[id])
+      orders = db.relationship("Order", backref='admin', remote_side=[id])
 
 
 

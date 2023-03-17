@@ -1,5 +1,5 @@
-from flask import jsonify, request, Blueprint
-# from flask_jwt_extended import JWTManager
+from flask import jsonify, request, abort, Blueprint
+from flask_jwt_extended import JWTManager
 from models.settings.model import Restaurant
 from models.db import db
 

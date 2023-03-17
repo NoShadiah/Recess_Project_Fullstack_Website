@@ -13,9 +13,8 @@ class Config:
 # sub classes of the base class
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:''@localhost/online_food_delivery_ms' 
-    #we have the databse driver, the username, the location, and the name of the database
-
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:''@localhost/online_food_delivery_ms' #we have the databse driver, the username, the location, and the name of the database
+    JWT_SECRET_KEY=os.environ.get('JWT_SECRET_KEY')
 class TestingConfig(Config):
     DEBUG = True
     TESTING = True

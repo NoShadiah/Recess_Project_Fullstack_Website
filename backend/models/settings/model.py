@@ -1,14 +1,14 @@
 from models.db import db
 
 class Restaurant(db.Model):
-        __tablename__ = "restaurants"
+        __tablename__ = "settings"
         id = db.Column('restaurant_id', db.Integer, primary_key = True)
         name = db.Column(db.String(100), nullable=False)
         location = db.Column(db.String(50))  
         contact = db.Column(db.Integer)
         opening_hrs = db.Column(db.String(6))
         closing_hrs = db.Column(db.String(6))
-        reg_by = db.Column(db.Integer, db.ForeignKey('admin.id'))
+        reg_by = db.Column(db.Integer, db.ForeignKey('admins.id'))
 
 
 
