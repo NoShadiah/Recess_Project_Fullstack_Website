@@ -1,7 +1,7 @@
 from models.db import db
 from datetime import datetime
 class Division(db.Model):
-        __tablename__ = "Divisions"
+        __tablename__ = "divisions"
         id = db.Column(db.Integer, primary_key = True)
         name = db.Column(db.String(100), nullable=False)
         district_id = db.Column(db.String(50), db.ForeignKey('districts.id'))  
@@ -11,7 +11,9 @@ class Division(db.Model):
         updated_by = db.Column(db.Integer, 
                         #        onupdate=
                                db.ForeignKey('admins.id') )
+        registres = db.relationship("Admin", back_populates="division", lazy='dynamic', foreign_keys='reg_by')
         menu = db.relationship("MenuItem", backref='division', remote_side=[id])
+        # orders = db.relationship("Order", backref='division', remote_side=[id])
    
 
         def __init__(self,name, district_id, reg_by, updated_by):

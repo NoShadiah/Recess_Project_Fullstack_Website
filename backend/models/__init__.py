@@ -20,7 +20,7 @@ def Create_app(config_name): #Application Factory Funciton
 
     @app.route('/')
     def greet():
-        return "Welcome to todo list app, sign up or login to access them"
+        return "The food delivery system, sign up or login to access them"
     #import the blueprints
     from models.admins.controller import admins
     from models.users.controller import users

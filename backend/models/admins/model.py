@@ -15,12 +15,12 @@ class Admin(db.Model):
       registered_at = db.Column(db.DateTime, default=datetime.now())
       # update_by = db.Column(db.String(30))
       updated_at = db.Column(db.DateTime, onupdate=datetime.now())
-      settings = db.relationship("Restaurant", backref="admin", remote_side=[id], lazy='dynamic')
+      settings = db.relationship("Restaurant", backref="admin", remote_side=[id], lazy='dynamic', secondary='admins', primaryjoin=('admins.id'), secondaryjoin=('admins.id'))
       regions = db.relationship("Region", backref="admin", remote_side=[id], lazy='dynamic')
       districts = db.relationship("District", backref="admin", remote_side=[id], lazy='dynamic')
       divisions = db.relationship("Division", backref="admin", remote_side=[id], lazy='dynamic')
-      menu = db.relationship("MenuItem", backref='admin', remote_side=[id])
-      orders = db.relationship("Order", backref='admin', remote_side=[id])
+      menu = db.relationship("MenuItem", backref='admin', remote_side=[id], lazy='dynamic')
+      orders = db.relationship("Order", backref='admin', remote_side=[id], lazy='dynamic')
 
 
 

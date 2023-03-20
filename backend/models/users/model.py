@@ -15,7 +15,7 @@ class User(db.Model):
         registered_at = db.Column(db.DateTime, default=datetime.now())
         # update_by = db.Column(db.String(30))
         updated_at = db.Column(db.DateTime, onupdate=datetime.now())
-        orders = db.relationship("Order", backref='user', remote_side=[id])
+        
 
         
         def __init__(self, name, email,contact,user_type,password,):

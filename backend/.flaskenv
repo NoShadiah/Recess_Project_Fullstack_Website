@@ -1,4 +1,4 @@
-$env:FLASK_ENV="development"
-$env:FLASK_DEBUG=1
-$env:FLASK_APP="backend"
-$env:JWT_SECRET_KEY='JWT_SECRET_KEY'
+FLASK_ENV="development"
+FLASK_DEBUG=1
+FLASK_APP="backend"
+JWT_SECRET_KEY='JWT_SECRET_KEY'

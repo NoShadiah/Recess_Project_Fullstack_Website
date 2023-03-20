@@ -1,4 +1,4 @@
-from models import Create_app, db
+from models import Create_app,db
 from flask_migrate import Migrate
 from models.users.model import User
 from models.admins.model import Admin
@@ -12,7 +12,7 @@ from models.menu.model import MenuItem
 from models.orders.model import Order
 
 app = Create_app('development')
-migrate = Migrate(app, db)
+migrate = Migrate(app, db, render_as_batch=True)
 
 @app.shell_context_processor
 def make_shell_context():

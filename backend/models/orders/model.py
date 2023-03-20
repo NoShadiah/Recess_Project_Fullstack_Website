@@ -4,7 +4,7 @@ class Order(db.Model):
         __tablaname__ = "orders"
         id = db.Column(db.Integer, primary_key = True)
         made_by = db.Column(db.Integer, db.ForeignKey('users.id')) 
-        delivery_destination = db.Column(db.integer, db.ForeignKey('divisions.id'))
+        # delivery_destination = db.Column(db.Integer, db.ForeignKey('divisions.id'))
         local_address = db.Column(db.String(200))
         menu_item = db.Column(db.Integer, db.ForeignKey('menu.id'))
         quantity = db.Column(db.Integer) 
@@ -13,7 +13,8 @@ class Order(db.Model):
         status = db.Column(db.String(10), default='Pending')
         update_at = db.Column(db.DateTime, onupdate=datetime.now())
         updated_by = db.Column(db.Integer, db.ForeignKey('admins.id'))
-        
+        # users = db.relationship("Users", remote_side=[id])
+        users = db.relationship("User", backref='orders', primaryjoin=('Order.made_by'=='User.id'))
         
         def __init__(self,
                      grand_total, 
@@ -34,4 +35,4 @@ class Order(db.Model):
                #  self.updated_by=updated_by
                 self.quantity=quantity
         def __repr__(self):
-            return f"Category>>>>>{Categouser_id}"
+            return f"Category>>>>>{Order.made_by}"
